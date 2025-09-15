@@ -1,0 +1,23 @@
+.example-page {
+	padding-top: 1.5rem;
+
+	.card {
+		border-radius: .5rem;
+		box-shadow: 0 8px 24px rgba(0,0,0,.06);
+	}
+
+	.table {
+		th, td {
+			vertical-align: middle;
+		}
+	}
+
+	.form-label {
+		font-weight: 600;
+	}
+
+	.btn-primary {
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
+}
