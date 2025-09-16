@@ -111,21 +111,22 @@ export default function Example() {
             <div className="container py-4">
                 <div className="row justify-content-center">
                     <div className="col-lg-8">
-                        <div className="card shadow-sm">
-                            <div className="card-header">
+                        <div className="card shadow-sm card-custom">
+                            <div className="card-header d-flex align-items-center justify-content-between">
                                 <h5 className="mb-0">Students</h5>
+                                <small className="text-muted">Manage student records</small>
                             </div>
                             <div className="card-body">
                                 {message && (
                                     <div className="alert alert-info py-2">{message}</div>
                                 )}
 
-                                <form onSubmit={handleSubmit} className="row g-3">
+                                <form onSubmit={handleSubmit} className="row g-3 align-items-end form-custom">
                                     <div className="col-md-6">
                                         <label className="form-label">Student ID</label>
                                         <input
-                                            className={`form-control ${errors.student_id ? 'is-invalid' : ''}`}
-                                            placeholder=""
+                                            className={`form-control input-lg ${errors.student_id ? 'is-invalid' : ''}`}
+                                            placeholder="e.g. 312312312"
                                             value={studentId}
                                             onChange={(e) => setStudentId(e.target.value)}
                                         />
@@ -139,8 +140,8 @@ export default function Example() {
                                     <div className="col-md-6">
                                         <label className="form-label">First Name</label>
                                         <input
-                                            className={`form-control ${errors.first_name ? 'is-invalid' : ''}`}
-                                            placeholder=""
+                                            className={`form-control input-lg ${errors.first_name ? 'is-invalid' : ''}`}
+                                            placeholder="First name"
                                             value={firstName}
                                             onChange={(e) => setFirstName(e.target.value)}
                                         />
@@ -154,8 +155,8 @@ export default function Example() {
                                     <div className="col-md-6">
                                         <label className="form-label">Last Name</label>
                                         <input
-                                            className={`form-control ${errors.last_name ? 'is-invalid' : ''}`}
-                                            placeholder=""
+                                            className={`form-control input-lg ${errors.last_name ? 'is-invalid' : ''}`}
+                                            placeholder="Last name"
                                             value={lastName}
                                             onChange={(e) => setLastName(e.target.value)}
                                         />
@@ -169,8 +170,8 @@ export default function Example() {
                                     <div className="col-md-6">
                                         <label className="form-label">Middle Name</label>
                                         <input
-                                            className={`form-control ${errors.middle_name ? 'is-invalid' : ''}`}
-                                            placeholder=""
+                                            className={`form-control input-lg ${errors.middle_name ? 'is-invalid' : ''}`}
+                                            placeholder="Middle name (optional)"
                                             value={middleName}
                                             onChange={(e) => setMiddleName(e.target.value)}
                                         />
@@ -181,15 +182,16 @@ export default function Example() {
                                         )}
                                     </div>
 
-                                    <div className="col-12">
-                                        <button type="submit" className="btn btn-primary me-2">
+                                    <div className="col-12 d-flex gap-2">
+                                        <button type="submit" className="btn btn-primary btn-lg">
                                             {editingStudentId ? 'Update' : 'Save'}
                                         </button>
                                         {editingStudentId && (
-                                            <button type="button" className="btn btn-secondary" onClick={cancelEdit}>
+                                            <button type="button" className="btn btn-outline-secondary btn-lg" onClick={cancelEdit}>
                                                 Cancel
                                             </button>
                                         )}
+                                        <div className="ms-auto text-muted align-self-center small">{students.length} records</div>
                                     </div>
                                 </form>
 

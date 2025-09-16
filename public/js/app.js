@@ -66307,6 +66307,32 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/js/components/Dacut.js":
+/*!******************************************!*\
+  !*** ./resources/js/components/Dacut.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Dacut)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+function Dacut() {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+    className: "container py-4",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", {
+      children: "Dacut"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", {})]
+  });
+}
+
+/***/ }),
+
 /***/ "./resources/js/components/Example.js":
 /*!********************************************!*\
   !*** ./resources/js/components/Example.js ***!
@@ -66548,13 +66574,16 @@ function Example() {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
           className: "col-lg-8",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-            className: "card shadow-sm",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-              className: "card-header",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h5", {
+            className: "card shadow-sm card-custom",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "card-header d-flex align-items-center justify-content-between",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h5", {
                 className: "mb-0",
                 children: "Students"
-              })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("small", {
+                className: "text-muted",
+                children: "Manage student records"
+              })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
               className: "card-body",
               children: [message && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
@@ -66562,15 +66591,15 @@ function Example() {
                 children: message
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("form", {
                 onSubmit: handleSubmit,
-                className: "row g-3",
+                className: "row g-3 align-items-end form-custom",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                   className: "col-md-6",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
                     className: "form-label",
                     children: "Student ID"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-                    className: "form-control ".concat(errors.student_id ? 'is-invalid' : ''),
-                    placeholder: "",
+                    className: "form-control input-lg ".concat(errors.student_id ? 'is-invalid' : ''),
+                    placeholder: "e.g. 312312312",
                     value: studentId,
                     onChange: function onChange(e) {
                       return setStudentId(e.target.value);
@@ -66585,8 +66614,8 @@ function Example() {
                     className: "form-label",
                     children: "First Name"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-                    className: "form-control ".concat(errors.first_name ? 'is-invalid' : ''),
-                    placeholder: "",
+                    className: "form-control input-lg ".concat(errors.first_name ? 'is-invalid' : ''),
+                    placeholder: "First name",
                     value: firstName,
                     onChange: function onChange(e) {
                       return setFirstName(e.target.value);
@@ -66601,8 +66630,8 @@ function Example() {
                     className: "form-label",
                     children: "Last Name"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-                    className: "form-control ".concat(errors.last_name ? 'is-invalid' : ''),
-                    placeholder: "",
+                    className: "form-control input-lg ".concat(errors.last_name ? 'is-invalid' : ''),
+                    placeholder: "Last name",
                     value: lastName,
                     onChange: function onChange(e) {
                       return setLastName(e.target.value);
@@ -66617,8 +66646,8 @@ function Example() {
                     className: "form-label",
                     children: "Middle Name"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-                    className: "form-control ".concat(errors.middle_name ? 'is-invalid' : ''),
-                    placeholder: "",
+                    className: "form-control input-lg ".concat(errors.middle_name ? 'is-invalid' : ''),
+                    placeholder: "Middle name (optional)",
                     value: middleName,
                     onChange: function onChange(e) {
                       return setMiddleName(e.target.value);
@@ -66628,16 +66657,19 @@ function Example() {
                     children: fieldError('middle_name')
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                  className: "col-12",
+                  className: "col-12 d-flex gap-2",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
                     type: "submit",
-                    className: "btn btn-primary me-2",
+                    className: "btn btn-primary btn-lg",
                     children: editingStudentId ? 'Update' : 'Save'
                   }), editingStudentId && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
                     type: "button",
-                    className: "btn btn-secondary",
+                    className: "btn btn-outline-secondary btn-lg",
                     onClick: cancelEdit,
                     children: "Cancel"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                    className: "ms-auto text-muted align-self-center small",
+                    children: [students.length, " records"]
                   })]
                 })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("hr", {
@@ -66732,7 +66764,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function Home() {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", {});
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", {
+    children: "Dacut"
+  });
 }
 
 /***/ }),
@@ -66754,7 +66788,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _Example__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Example */ "./resources/js/components/Example.js");
 /* harmony import */ var _Home__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Home */ "./resources/js/components/Home.js");
-/* harmony import */ var _Viray__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Viray */ "./resources/js/components/Viray.js");
+/* harmony import */ var _Dacut__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Dacut */ "./resources/js/components/Dacut.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
@@ -66767,7 +66801,7 @@ function Routers() {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.BrowserRouter, {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("nav", {
-        className: "navbar navbar-expand-lg navbar-dark bg-dark mb-4",
+        className: "navbar navbar-expand-lg navbar-dark bg-primary mb-4",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
           className: "container",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("a", {
@@ -66786,8 +66820,8 @@ function Routers() {
               children: "Example"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("a", {
               className: "nav-link",
-              href: "/viray",
-              children: "Viray"
+              href: "/dacut",
+              children: "Dacut"
             })]
           })]
         })
@@ -66802,8 +66836,8 @@ function Routers() {
           path: "/home",
           element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Home__WEBPACK_IMPORTED_MODULE_5__["default"], {})
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Route, {
-          path: "/viray",
-          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Viray__WEBPACK_IMPORTED_MODULE_6__["default"], {})
+          path: "/dacut",
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Dacut__WEBPACK_IMPORTED_MODULE_6__["default"], {})
         })]
       })]
     })
@@ -66812,32 +66846,6 @@ function Routers() {
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Routers);
 if (document.getElementById('root')) {
   react_dom__WEBPACK_IMPORTED_MODULE_1__.render(/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(Routers, {}), document.getElementById('root'));
-}
-
-/***/ }),
-
-/***/ "./resources/js/components/Viray.js":
-/*!******************************************!*\
-  !*** ./resources/js/components/Viray.js ***!
-  \******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Viray)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-
-
-function Viray() {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-    className: "container py-4",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", {
-      children: "Viray"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", {})]
-  });
 }
 
 /***/ }),
