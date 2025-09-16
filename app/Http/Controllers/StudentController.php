@@ -68,4 +68,37 @@ class StudentController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, student $student): JsonResponse
+    {
+        try {
+            $validated = $request->validate([
+                'student_id' => 'required|string|max:255|unique:student_details,student_id,' . $student->id,
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'middle_name' => 'nullable|string|max:255',
+            ]);
+
+            $student->update($validated);
+
+            return response()->json([
+                'student' => $student,
+                'message' => 'Student updated successfully'
+            ]);
+
+        } catch (ValidationException $e) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $e->errors()
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error updating student',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

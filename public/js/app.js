@@ -66361,14 +66361,18 @@ function Example() {
     _useState0 = _slicedToArray(_useState9, 2),
     students = _useState0[0],
     setStudents = _useState0[1];
-  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState10 = _slicedToArray(_useState1, 2),
-    errors = _useState10[0],
-    setErrors = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    editingStudentId = _useState10[0],
+    setEditingStudentId = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
     _useState12 = _slicedToArray(_useState11, 2),
-    message = _useState12[0],
-    setMessage = _useState12[1];
+    errors = _useState12[0],
+    setErrors = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState14 = _slicedToArray(_useState13, 2),
+    message = _useState14[0],
+    setMessage = _useState14[1];
   var fetchStudents = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
       var res, _t;
@@ -66401,7 +66405,7 @@ function Example() {
   }, []);
   var handleSubmit = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(e) {
-      var res, _t2;
+      var res, _res, _t2;
       return _regenerator().w(function (_context2) {
         while (1) switch (_context2.p = _context2.n) {
           case 0:
@@ -66409,8 +66413,12 @@ function Example() {
             setErrors({});
             setMessage('');
             _context2.p = 1;
+            if (!editingStudentId) {
+              _context2.n = 3;
+              break;
+            }
             _context2.n = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_1___default().post('http://127.0.0.1:8000/api/students', {
+            return axios__WEBPACK_IMPORTED_MODULE_1___default().put("http://127.0.0.1:8000/api/students/".concat(editingStudentId), {
               student_id: studentId,
               first_name: firstName,
               last_name: lastName,
@@ -66418,28 +66426,50 @@ function Example() {
             });
           case 2:
             res = _context2.v;
+            setMessage('Student updated');
+            // replace student in list
+            setStudents(function (prev) {
+              return prev.map(function (s) {
+                return s.id === res.data.student.id ? res.data.student : s;
+              });
+            });
+            setEditingStudentId(null);
+            _context2.n = 5;
+            break;
+          case 3:
+            _context2.n = 4;
+            return axios__WEBPACK_IMPORTED_MODULE_1___default().post('http://127.0.0.1:8000/api/students', {
+              student_id: studentId,
+              first_name: firstName,
+              last_name: lastName,
+              middle_name: middleName || null
+            });
+          case 4:
+            _res = _context2.v;
             setMessage('Student created');
+            setStudents(function (prev) {
+              return [_res.data.student].concat(_toConsumableArray(prev));
+            });
+          case 5:
+            // Reset form
             setStudentId('');
             setFirstName('');
             setLastName('');
             setMiddleName('');
-            setStudents(function (prev) {
-              return [res.data.student].concat(_toConsumableArray(prev));
-            });
-            _context2.n = 4;
+            _context2.n = 7;
             break;
-          case 3:
-            _context2.p = 3;
+          case 6:
+            _context2.p = 6;
             _t2 = _context2.v;
             if (_t2.response && _t2.response.status === 422) {
               setErrors(_t2.response.data.errors || {});
             } else {
-              setMessage('Error creating student');
+              setMessage(editingStudentId ? 'Error updating student' : 'Error creating student');
             }
-          case 4:
+          case 7:
             return _context2.a(2);
         }
-      }, _callee2, null, [[1, 3]]);
+      }, _callee2, null, [[1, 6]]);
     }));
     return function handleSubmit(_x) {
       return _ref2.apply(this, arguments);
@@ -66481,6 +66511,29 @@ function Example() {
       return _ref3.apply(this, arguments);
     };
   }();
+  var handleEdit = function handleEdit(student) {
+    setEditingStudentId(student.id);
+    setStudentId(student.student_id || '');
+    setFirstName(student.first_name || '');
+    setLastName(student.last_name || '');
+    setMiddleName(student.middle_name || '');
+    setErrors({});
+    setMessage('');
+    // scroll to form
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+  var cancelEdit = function cancelEdit() {
+    setEditingStudentId(null);
+    setStudentId('');
+    setFirstName('');
+    setLastName('');
+    setMiddleName('');
+    setErrors({});
+    setMessage('');
+  };
   var fieldError = function fieldError(key) {
     var v = errors[key];
     if (!v) return null;
@@ -66517,7 +66570,7 @@ function Example() {
                     children: "Student ID"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
                     className: "form-control ".concat(errors.student_id ? 'is-invalid' : ''),
-                    placeholder: "e.g. 2025-0001",
+                    placeholder: "",
                     value: studentId,
                     onChange: function onChange(e) {
                       return setStudentId(e.target.value);
@@ -66533,7 +66586,7 @@ function Example() {
                     children: "First Name"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
                     className: "form-control ".concat(errors.first_name ? 'is-invalid' : ''),
-                    placeholder: "e.g. Juan",
+                    placeholder: "",
                     value: firstName,
                     onChange: function onChange(e) {
                       return setFirstName(e.target.value);
@@ -66549,7 +66602,7 @@ function Example() {
                     children: "Last Name"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
                     className: "form-control ".concat(errors.last_name ? 'is-invalid' : ''),
-                    placeholder: "e.g. Dela Cruz",
+                    placeholder: "",
                     value: lastName,
                     onChange: function onChange(e) {
                       return setLastName(e.target.value);
@@ -66562,10 +66615,10 @@ function Example() {
                   className: "col-md-6",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
                     className: "form-label",
-                    children: "Middle Name (optional)"
+                    children: "Middle Name"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
                     className: "form-control ".concat(errors.middle_name ? 'is-invalid' : ''),
-                    placeholder: "e.g. Santos",
+                    placeholder: "",
                     value: middleName,
                     onChange: function onChange(e) {
                       return setMiddleName(e.target.value);
@@ -66574,13 +66627,18 @@ function Example() {
                     className: "invalid-feedback d-block",
                     children: fieldError('middle_name')
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                   className: "col-12",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
                     type: "submit",
-                    className: "btn btn-primary",
-                    children: "Save"
-                  })
+                    className: "btn btn-primary me-2",
+                    children: editingStudentId ? 'Update' : 'Save'
+                  }), editingStudentId && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+                    type: "button",
+                    className: "btn btn-secondary",
+                    onClick: cancelEdit,
+                    children: "Cancel"
+                  })]
                 })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("hr", {
                 className: "my-4"
@@ -66618,12 +66676,22 @@ function Example() {
                         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
                           children: s.middle_name || ''
                         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
-                            className: "btn btn-sm btn-outline-danger",
-                            onClick: function onClick() {
-                              return handleDelete(s.id);
-                            },
-                            children: "Delete"
+                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                            className: "btn-group",
+                            role: "group",
+                            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+                              className: "btn btn-sm btn-outline-secondary",
+                              onClick: function onClick() {
+                                return handleEdit(s);
+                              },
+                              children: "Edit"
+                            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+                              className: "btn btn-sm btn-outline-danger",
+                              onClick: function onClick() {
+                                return handleDelete(s.id);
+                              },
+                              children: "Delete"
+                            })]
                           })
                         })]
                       }, s.id);

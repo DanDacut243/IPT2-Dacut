@@ -8,6 +8,7 @@ export default function Example() {
     const [lastName, setLastName] = useState('');
     const [middleName, setMiddleName] = useState('');
     const [students, setStudents] = useState([]);
+    const [editingStudentId, setEditingStudentId] = useState(null);
     const [errors, setErrors] = useState({});
     const [message, setMessage] = useState('');
 
@@ -29,23 +30,40 @@ export default function Example() {
         setErrors({});
         setMessage('');
         try {
-            const res = await axios.post('http://127.0.0.1:8000/api/students', {
-                student_id: studentId,
-                first_name: firstName,
-                last_name: lastName,
-                middle_name: middleName || null,
-            });
-            setMessage('Student created');
+            if (editingStudentId) {
+                // Update existing student
+                const res = await axios.put(`http://127.0.0.1:8000/api/students/${editingStudentId}`, {
+                    student_id: studentId,
+                    first_name: firstName,
+                    last_name: lastName,
+                    middle_name: middleName || null,
+                });
+                setMessage('Student updated');
+                // replace student in list
+                setStudents((prev) => prev.map((s) => (s.id === res.data.student.id ? res.data.student : s)));
+                setEditingStudentId(null);
+            } else {
+                // Create new student
+                const res = await axios.post('http://127.0.0.1:8000/api/students', {
+                    student_id: studentId,
+                    first_name: firstName,
+                    last_name: lastName,
+                    middle_name: middleName || null,
+                });
+                setMessage('Student created');
+                setStudents((prev) => [res.data.student, ...prev]);
+            }
+
+            // Reset form
             setStudentId('');
             setFirstName('');
             setLastName('');
             setMiddleName('');
-            setStudents((prev) => [res.data.student, ...prev]);
         } catch (error) {
             if (error.response && error.response.status === 422) {
                 setErrors(error.response.data.errors || {});
             } else {
-                setMessage('Error creating student');
+                setMessage(editingStudentId ? 'Error updating student' : 'Error creating student');
             }
         }
     };
@@ -58,6 +76,28 @@ export default function Example() {
         } catch (e) {
             console.error('Failed to delete student', e);
         }
+    };
+
+    const handleEdit = (student) => {
+        setEditingStudentId(student.id);
+        setStudentId(student.student_id || '');
+        setFirstName(student.first_name || '');
+        setLastName(student.last_name || '');
+        setMiddleName(student.middle_name || '');
+        setErrors({});
+        setMessage('');
+        // scroll to form
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const cancelEdit = () => {
+        setEditingStudentId(null);
+        setStudentId('');
+        setFirstName('');
+        setLastName('');
+        setMiddleName('');
+        setErrors({});
+        setMessage('');
     };
 
     const fieldError = (key) => {
@@ -85,7 +125,7 @@ export default function Example() {
                                         <label className="form-label">Student ID</label>
                                         <input
                                             className={`form-control ${errors.student_id ? 'is-invalid' : ''}`}
-                                            placeholder="e.g. 2025-0001"
+                                            placeholder=""
                                             value={studentId}
                                             onChange={(e) => setStudentId(e.target.value)}
                                         />
@@ -100,7 +140,7 @@ export default function Example() {
                                         <label className="form-label">First Name</label>
                                         <input
                                             className={`form-control ${errors.first_name ? 'is-invalid' : ''}`}
-                                            placeholder="e.g. Juan"
+                                            placeholder=""
                                             value={firstName}
                                             onChange={(e) => setFirstName(e.target.value)}
                                         />
@@ -115,7 +155,7 @@ export default function Example() {
                                         <label className="form-label">Last Name</label>
                                         <input
                                             className={`form-control ${errors.last_name ? 'is-invalid' : ''}`}
-                                            placeholder="e.g. Dela Cruz"
+                                            placeholder=""
                                             value={lastName}
                                             onChange={(e) => setLastName(e.target.value)}
                                         />
@@ -127,10 +167,10 @@ export default function Example() {
                                     </div>
 
                                     <div className="col-md-6">
-                                        <label className="form-label">Middle Name (optional)</label>
+                                        <label className="form-label">Middle Name</label>
                                         <input
                                             className={`form-control ${errors.middle_name ? 'is-invalid' : ''}`}
-                                            placeholder="e.g. Santos"
+                                            placeholder=""
                                             value={middleName}
                                             onChange={(e) => setMiddleName(e.target.value)}
                                         />
@@ -142,9 +182,14 @@ export default function Example() {
                                     </div>
 
                                     <div className="col-12">
-                                        <button type="submit" className="btn btn-primary">
-                                            Save
+                                        <button type="submit" className="btn btn-primary me-2">
+                                            {editingStudentId ? 'Update' : 'Save'}
                                         </button>
+                                        {editingStudentId && (
+                                            <button type="button" className="btn btn-secondary" onClick={cancelEdit}>
+                                                Cancel
+                                            </button>
+                                        )}
                                     </div>
                                 </form>
 
@@ -169,12 +214,20 @@ export default function Example() {
                                                     <td>{s.last_name}</td>
                                                     <td>{s.middle_name || ''}</td>
                                                     <td>
-                                                        <button
-                                                            className="btn btn-sm btn-outline-danger"
-                                                            onClick={() => handleDelete(s.id)}
-                                                        >
-                                                            Delete
-                                                        </button>
+                                                        <div className="btn-group" role="group">
+                                                            <button
+                                                                className="btn btn-sm btn-outline-secondary"
+                                                                onClick={() => handleEdit(s)}
+                                                            >
+                                                                Edit
+                                                            </button>
+                                                            <button
+                                                                className="btn btn-sm btn-outline-danger"
+                                                                onClick={() => handleDelete(s.id)}
+                                                            >
+                                                                Delete
+                                                            </button>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             ))}

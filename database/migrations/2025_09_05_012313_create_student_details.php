@@ -15,7 +15,10 @@ class CreateStudentDetails extends Migration
     {
         Schema::create('student_details', function (Blueprint $table) {
             $table->id();
-            $table->string('full_name');
+            $table->string('student_id')->unique();
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('middle_name')->nullable();
             $table->timestamps();
         });
     }
