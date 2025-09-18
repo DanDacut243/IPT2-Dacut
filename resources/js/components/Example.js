@@ -14,7 +14,7 @@ export default function Example() {
 
     const fetchStudents = async () => {
         try {
-            const res = await axios.get('http://127.0.0.1:8000/api/students');
+            const res = await axios.get('/students');
             setStudents(res.data);
         } catch (e) {
             console.error('Failed to fetch students', e);
@@ -31,8 +31,8 @@ export default function Example() {
         setMessage('');
         try {
             if (editingStudentId) {
-                // Update existing student
-                const res = await axios.put(`http://127.0.0.1:8000/api/students/${editingStudentId}`, {
+                // Update existing student (use PATCH for partial updates)
+                const res = await axios.patch(`/students/${editingStudentId}`, {
                     student_id: studentId,
                     first_name: firstName,
                     last_name: lastName,
@@ -44,7 +44,7 @@ export default function Example() {
                 setEditingStudentId(null);
             } else {
                 // Create new student
-                const res = await axios.post('http://127.0.0.1:8000/api/students', {
+                const res = await axios.post('/students', {
                     student_id: studentId,
                     first_name: firstName,
                     last_name: lastName,
@@ -71,7 +71,7 @@ export default function Example() {
     const handleDelete = async (id) => {
         if (!window.confirm('Delete this student?')) return;
         try {
-            await axios.delete(`http://127.0.0.1:8000/api/students/${id}`);
+            await axios.delete(`/students/${id}`);
             setStudents((prev) => prev.filter((s) => s.id !== id));
         } catch (e) {
             console.error('Failed to delete student', e);

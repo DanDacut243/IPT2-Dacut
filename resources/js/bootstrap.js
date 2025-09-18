@@ -12,6 +12,8 @@ try {
 
 window.axios = require('axios');
 
+// Set a sensible base URL for API requests so frontend code can use relative paths
+window.axios.defaults.baseURL = '/api';
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**
